@@ -1,11 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz App</title>
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .login-box input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .login-box button {
+            background-color: blue;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+        }
+        .quiz-container {
+            display: none;
+        }
+        .question {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .options button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+        }
+        .correct {
+            background-color: lightgreen;
+        }
+        .incorrect {
+            background-color: lightcoral;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="homePage">
+        <h2>🎉 Welcome to the Quiz App!</h2>
+        <p>Test your knowledge and challenge yourself with our quiz. Please <a href="#" onclick="showLogin()">Login</a> to get started.</p>
+    </div>
+
+    <div class="container login-box" id="loginPage" style="display: none;">
+        <h2>Login</h2>
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="login()">Login</button>
+    </div>
+
+    <div class="container quiz-container" id="quizPage">
+        <h2>📝 Take the Quiz</h2>
+        <div id="questionContainer">
+            <p class="question">Q1: What is React?</p>
+            <div class="options">
+                <button onclick="checkAnswer(this, true)">Library</button>
+                <button onclick="checkAnswer(this, false)">Framework</button>
+                <button onclick="checkAnswer(this, false)">Language</button>
+                <button onclick="checkAnswer(this, false)">Tool</button>
+            </div>
+            <p id="feedback"></p>
+        </div>
+    </div>
+
+    <script>
+        function showLogin() {
+            document.getElementById("homePage").style.display = "none";
+            document.getElementById("loginPage").style.display = "block";
+        }
+        function login() {
+            document.getElementById("loginPage").style.display = "none";
+            document.getElementById("quizPage").style.display = "block";
+        }
+        function checkAnswer(button, isCorrect) {
+            if (isCorrect) {
+                button.classList.add("correct");
+                document.getElementById("feedback").innerText = "✅ Correct! The answer is Library";
+            } else {
+                button.classList.add("incorrect");
+                document.getElementById("feedback").innerText = "❌ Incorrect! The correct answer is Library";
+            }
+        }
+    </script>
+</body>
 </html>
