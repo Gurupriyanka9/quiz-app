@@ -23,3 +23,6 @@ Follow these steps to set up the project locally:
    ```bash
    git clone <repository-url>
    cd quiz-app
+2. **Credentials**:
+   username: admin
+   password: password
