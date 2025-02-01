@@ -23,14 +23,15 @@
             padding: 10px;
             margin: 10px 0;
         }
-        .login-box button {
+        .login-box button, .options button, .result-box button {
             background-color: blue;
             color: white;
             border: none;
             padding: 10px;
             width: 100%;
+            margin: 5px 0;
         }
-        .quiz-container {
+        .quiz-container, .result-box {
             display: none;
         }
         .question {
@@ -39,9 +40,6 @@
         }
         .options button {
             display: block;
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0;
         }
         .correct {
             background-color: lightgreen;
@@ -75,26 +73,63 @@
                 <button onclick="checkAnswer(this, false)">Tool</button>
             </div>
             <p id="feedback"></p>
+            <button onclick="finishQuiz()">Finish Quiz</button>
         </div>
     </div>
 
+    <div class="container result-box" id="resultPage">
+        <h2>🎉 Yay! Quiz Completed! 🎉</h2>
+        <p id="resultMessage"></p>
+        <button onclick="restartQuiz()">Restart Quiz</button>
+    </div>
+
     <script>
+        let score = 0;
+
         function showLogin() {
             document.getElementById("homePage").style.display = "none";
             document.getElementById("loginPage").style.display = "block";
         }
+
         function login() {
             document.getElementById("loginPage").style.display = "none";
             document.getElementById("quizPage").style.display = "block";
         }
+
         function checkAnswer(button, isCorrect) {
             if (isCorrect) {
                 button.classList.add("correct");
                 document.getElementById("feedback").innerText = "✅ Correct! The answer is Library";
+                score++;
             } else {
                 button.classList.add("incorrect");
                 document.getElementById("feedback").innerText = "❌ Incorrect! The correct answer is Library";
             }
+
+            const options = button.parentElement.querySelectorAll('button');
+            options.forEach(opt => opt.disabled = true);
+        }
+
+        function finishQuiz() {
+            document.getElementById("quizPage").style.display = "none";
+            document.getElementById("resultPage").style.display = "block";
+
+            const totalQuestions = 1; // Adjust based on the number of questions
+            document.getElementById("resultMessage").innerHTML = `You answered <span style="color: red;">${score}</span> out of <span style="color: green;">${totalQuestions}</span> correctly!`;
+        }
+
+        function restartQuiz() {
+            score = 0;
+            document.getElementById("resultPage").style.display = "none";
+            document.getElementById("homePage").style.display = "block";
+
+            const buttons = document.querySelectorAll('.options button');
+            buttons.forEach(button => {
+                button.disabled = false;
+                button.classList.remove("correct", "incorrect");
+            });
+
+            document.getElementById("feedback").innerText = "";
         }
     </script>
 </body>
